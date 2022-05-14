@@ -38,8 +38,8 @@ contract WavePortal {
       * Precisamos garantir que o valor corrente de timestamp é ao menos 15 minutos maior que o último timestamp armazenado
       */
       require(
-        waves[lastWaveIndex].timestamp + 15 minutes < block.timestamp,
-        "Espere 15m"
+        waves[lastWaveIndex].timestamp + 30 seconds < block.timestamp,
+        "Espere 30s para enviar outra transacao"
       );
     }
     // waves.length: o índice do próximo salve
@@ -61,12 +61,12 @@ contract WavePortal {
     console.log("# randomico gerado: %d", seed);
 
     /*
-    * Dá 50%  de chance do usuário ganhar o prêmio.
+    * Dá 30%  de chance do usuário ganhar o prêmio.
     */
-    if (seed <= 50) {
+    if (seed <= 30) {
       console.log("%s ganhou!", msg.sender);
 
-      uint256 prizeAmount = 0.00001 ether;
+      uint256 prizeAmount = 0.0001 ether;
       require(
         prizeAmount <= address(this).balance,
         "Tentando sacar mais dinheiro que o contrato possui."
