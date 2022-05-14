@@ -1,7 +1,8 @@
 require("@nomiclabs/hardhat-waffle");
-require("dotenv").config();
+// parece que ao importar o dotenv, o repl se confunde...
+// ao rodar local, importar o config do dotenv:
+//require("dotenv").config();
 
-// por algum motivo, não estou conseguindo utilizar as variáveis de ambiente do repl assim... e não posso usar o dotenv no repl...
 module.exports = {
   solidity: "0.8.0",
   networks: {
@@ -9,10 +10,13 @@ module.exports = {
       url: process.env['STAGING_ALCHEMY_KEY'],
       accounts: [process.env['PRIVATE_KEY']],
     },
+    /*
+    * apenas habilitar caso deseja conectar à mainnet
     mainnet: {
       chainId: 1,
-      url: process.env.PROD_ALCHEMY_KEY,
+      url: process.env['PROD_ALCHEMY_KEY'], 
       accounts: [process.env['PRIVATE_KEY']],
     },
+    */
   },
 };
