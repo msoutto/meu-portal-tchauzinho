@@ -15,18 +15,15 @@ contract WavePortal {
   mapping (address => uint256[]) waverToWaves;
   WaveData[] waves;
   uint256 totalWaves;
-  /*
-  * Utilizaremos isso abaixo para gerar um número randômico
-  */
+  // Utilizaremos isso abaixo para gerar um número randômico
   uint256 private seed;
 
   event NewWave(address indexed from, uint256 timestamp, string message);
   
   constructor() payable {
     console.log("Contrato publicado!");
-    /*
-    * Define a semente inicial
-    */
+    
+    // Define a semente inicial
     seed = (block.timestamp + block.difficulty) % 100;
   }
 
@@ -35,7 +32,7 @@ contract WavePortal {
     if (waverToWaves[msg.sender].length > 0) {
       uint256 lastWaveIndex = waverToWaves[msg.sender][waverToWaves[msg.sender].length - 1];
       /*
-      * Precisamos garantir que o valor corrente de timestamp é ao menos 15 minutos maior que o último timestamp armazenado
+      * Precisamos garantir que o valor corrente de timestamp é ao menos 30 segundos maior que o último timestamp armazenado
       */
       require(
         waves[lastWaveIndex].timestamp + 30 seconds < block.timestamp,
@@ -54,15 +51,11 @@ contract WavePortal {
     
     emit NewWave(msg.sender, block.timestamp, _message);
 
-    /*
-    * Gera uma nova semente para o próximo que mandar um tchauzinho
-    */
+    // Gera uma nova semente para o próximo que mandar um tchauzinho
     seed = (block.difficulty + block.timestamp + seed) % 100;
     console.log("# randomico gerado: %d", seed);
 
-    /*
-    * Dá 30%  de chance do usuário ganhar o prêmio.
-    */
+    // Dá 30%  de chance do usuário ganhar o prêmio.
     if (seed <= 30) {
       console.log("%s ganhou!", msg.sender);
 
